@@ -22,4 +22,4 @@ I build and test low-power embedded systems — firmware, PCBs and the measureme
 - 🔐 **Secure boot** — MCUboot with signed firmware updates — *planned*
 
 ### Contact
-📫 baliyu70@gmail.com · [LinkedIn](https://linkedin.com/in/bello-aliyu-827462111)](https://www.linkedin.com/in/bello-aliyu-phd-827462111)
+📫 baliyu70@gmail.com · [[LinkedIn](https://linkedin.com/in/bello-aliyu-827462111)](https://www.linkedin.com/in/bello-aliyu-phd-827462111)
