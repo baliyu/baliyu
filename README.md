@@ -16,10 +16,10 @@ I build and test low-power embedded systems — firmware, PCBs and the measureme
 - 📊 Open dataset: [Zenodo 10.5281/zenodo.19592147](https://doi.org/10.5281/zenodo.19592147) · [IEEE DataPort 10.21227/fecz-fe94](https://doi.org/10.21227/fecz-fe94)
 - 🔬 5,488 validated authentication attempts across 27.4–56.1 °C on a 2×2 cross-platform hardware testbed
 
-### Current projects
-- 🛠️ **FreeRTOS sensor node** on STM32L0 — multi-task firmware, queues, ISR handling, low-power idle
-- 🔌 **RTL design & verification** — UART, SPI, CDC async FIFO, pipelined image filter, verified with cocotb
-- 🔐 **Secure boot** — MCUboot with signed firmware updates on custom STM32 hardware
+### Current & planned projects
+- 🛠️ **FreeRTOS sensor node** on STM32L0 — *in progress*
+- 🔌 **RTL design & verification** — UART, SPI, CDC async FIFO, cocotb — *planned*
+- 🔐 **Secure boot** — MCUboot with signed firmware updates — *planned*
 
 ### Contact
 📫 baliyu70@gmail.com · [LinkedIn](https://linkedin.com/in/bello-aliyu-827462111)
