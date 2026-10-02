@@ -1,4 +1,4 @@
-# Dr Mohammed Bello Aliyu
+
 
 **Embedded systems & hardware security engineer** · PhD, University of Huddersfield (2026)
 
