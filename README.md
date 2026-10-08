@@ -4,7 +4,7 @@ I build and test low-power embedded systems — firmware, PCBs and the measureme
 
 ### What I work with
 - **Embedded:** C on ARM Cortex-M (STM32L0, SAMD21) · FreeRTOS (tasks, queues, mutexes, watchdog, tickless idle) · Zephyr RTOS (ztest, CMSIS-DSP, west) · SPI / I²C / UART · JTAG/SWD + GDB · CMake / arm-none-eabi-gcc
-- **Embedded security:** secure boot (SHA-256, ECDSA P-256, anti-rollback, power-fail-safe updates) · flash write protection and read-out protection · AES-128-CTR / AES-CMAC link security · hardware secure element (ATECC608) · authenticated BLE pairing (LE Secure Connections, bonds in flash) · key provisioning and backup
+- **Embedded security:** secure boot (SHA-256, ECDSA P-256, anti-rollback, power-fail-safe updates) · flash write protection and read-out protection · AES-128-CTR / AES-CMAC link security · hardware secure element (ATECC608) · authenticated BLE pairing (LE Secure Connections, bonds in flash) · key provisioning and backup · threat modelling (STRIDE)
 - **Testing:** host-side unit tests · known-answer vectors (FIPS-197, RFC 4493, RFC 6979) · simulated power-cut tests · Zephyr ztest on native_sim · GitHub Actions CI (unit tests + firmware build)
 - **Hardware:** KiCad schematic & PCB layout · board bring-up · oscilloscope validation
 - **Wireless & RF:** LoRa/LoRaWAN · BLE (GATT, secure pairing) · RTL-SDR capture · carrier-frequency-offset analysis
