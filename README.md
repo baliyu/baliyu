@@ -10,6 +10,7 @@ I build and test low-power embedded systems — firmware, PCBs and the measureme
 - **Wireless & RF:** LoRa/LoRaWAN · BLE (GATT, secure pairing) · RTL-SDR capture · carrier-frequency-offset analysis
 - **Digital design:** VHDL · Verilog/SystemVerilog *(in progress)* · Intel Quartus · ModelSim
 - **Analysis:** Python (NumPy, pandas, scikit-learn, matplotlib)
+- **Edge ML** *(in progress)*: grouped cross-validation, so test data never influences a choice · decision trees and random forests · decision-tree-to-C export, checked against scikit-learn on a PC · TinyML on the SparkFun Edge and Nano 33 BLE *(next)*
 
 ### Research highlights
 - 📄 [Complementary failure modes of SRAM-PUF and RF fingerprinting under compound thermal–distance stress](https://doi.org/10.1016/j.adhoc.2026.104413) — *Ad Hoc Networks* (Elsevier), 2026, open access
@@ -22,9 +23,13 @@ I build and test low-power embedded systems — firmware, PCBs and the measureme
 - 🔑 [**MKR WAN 1310 secure-element LoRa node**](https://github.com/baliyu/mkrwan-secure-element-node) — link keys held in an ATECC608 that never reveals them. AES-CTR and CMAC are built from the chip's single-block AES: byte-identical to my software implementation on 2,000 random packets and accepted by the unchanged receiver. Hardware counter as frame counter, and a comparison with SRAM PUFs.
 - 📡 [**Zephyr BLE vibration monitor**](https://github.com/baliyu/zephyr-ble-vibration-monitor) on the Arduino Nano 33 BLE — 400 Hz accelerometer sampling, CMSIS-DSP FFT for the dominant frequency, BLE notifications readable only after authenticated pairing (passkey on the USB console, bonds kept in flash), 44 ztest cases on native_sim, and GitHub Actions CI that runs them and builds the firmware on every push. Verified on the board with an iPhone.
 
+**In progress**
+- 🧪 [**tinyml-edge-lab**](https://github.com/baliyu/tinyml-edge-lab) — tested building blocks for machine learning on my own boards. On the UCI smartphone-motion data the tree depth is chosen by cross-validation grouped by volunteer, and the nine test volunteers are used once per model: a 33-node decision tree scores 0.834 macro-F1 and a 2,186-node random forest 0.877. A tree-to-C exporter is checked by compiling the generated C and comparing it with scikit-learn. Not yet run on a microcontroller: the SparkFun Edge and Nano 33 BLE steps come next.
+
 **Planned**
 - 🔌 **RTL design & verification** — UART, SPI, CDC async FIFO, cocotb
 - 🔐 **MCUboot on Zephyr**, compared with my own bootloader
+- 🧪 **TinyML on the SparkFun Edge and Nano 33 BLE** — the TinyML book's examples, then an IMU data logger and an on-device classifier checked against the PC
 
 ### Contact
 📫 baliyu70@gmail.com · [LinkedIn](https://www.linkedin.com/in/bello-aliyu-phd-827462111)
