@@ -1,6 +1,6 @@
 **Embedded systems & hardware security engineer** · PhD, University of Huddersfield (2026)
 
-I build and test low-power embedded systems — firmware, PCBs and the measurements that show whether they really work. My PhD developed hardware-rooted device authentication for LoRaWAN IoT nodes, combining SRAM Physical Unclonable Functions with RF fingerprinting on ARM Cortex-M0+ hardware. Alongside it I build embedded security projects end to end, from bootloader to radio link, each with host-side tests and its evidence kept in the repository.
+I build and test low-power embedded systems — firmware, PCBs and the measurements that show whether they really work. My PhD developed hardware-rooted device authentication for LoRaWAN IoT nodes, combining SRAM Physical Unclonable Functions with RF fingerprinting on ARM Cortex-M0+ hardware. Alongside it I build embedded security projects end to end, from bootloader to radio link, each with host-side tests and its evidence kept in the repository. I also test machine learning for small devices, with evaluation designed so that the test data cannot flatter the result.
 
 ### What I work with
 - **Embedded:** C on ARM Cortex-M (STM32L0, SAMD21) · FreeRTOS (tasks, queues, mutexes, watchdog, tickless idle) · Zephyr RTOS (ztest, CMSIS-DSP, west) · SPI / I²C / UART · JTAG/SWD + GDB · CMake / arm-none-eabi-gcc
@@ -10,7 +10,7 @@ I build and test low-power embedded systems — firmware, PCBs and the measureme
 - **Wireless & RF:** LoRa/LoRaWAN · BLE (GATT, secure pairing) · RTL-SDR capture · carrier-frequency-offset analysis
 - **Digital design:** VHDL · Verilog/SystemVerilog *(in progress)* · Intel Quartus · ModelSim
 - **Analysis:** Python (NumPy, pandas, scikit-learn, matplotlib)
-- **Edge ML** *(in progress)*: grouped cross-validation, so test data never influences a choice · decision trees and random forests · decision-tree-to-C export, checked against scikit-learn on a PC · TinyML on the SparkFun Edge and Nano 33 BLE *(next)*
+- **Edge ML:** evaluation without leakage (cross-validation grouped by volunteer; held-out recording sessions and fault sizes) · decision trees and random forests · decision-tree-to-C export with float thresholds, flash size measured on Cortex-M0+ and M4F · feature extraction in C checked against Python · accelerometer logging on the SparkFun Edge (Apollo3) · *a classifier running on the board is next*
 
 ### Research highlights
 - 📄 [Complementary failure modes of SRAM-PUF and RF fingerprinting under compound thermal–distance stress](https://doi.org/10.1016/j.adhoc.2026.104413) — *Ad Hoc Networks* (Elsevier), 2026, open access
@@ -24,12 +24,16 @@ I build and test low-power embedded systems — firmware, PCBs and the measureme
 - 📡 [**Zephyr BLE vibration monitor**](https://github.com/baliyu/zephyr-ble-vibration-monitor) on the Arduino Nano 33 BLE — 400 Hz accelerometer sampling, CMSIS-DSP FFT for the dominant frequency, BLE notifications readable only after authenticated pairing (passkey on the USB console, bonds kept in flash), 44 ztest cases on native_sim, and GitHub Actions CI that runs them and builds the firmware on every push. Verified on the board with an iPhone.
 
 **In progress**
-- 🧪 [**tinyml-edge-lab**](https://github.com/baliyu/tinyml-edge-lab) — tested building blocks for machine learning on my own boards. On the UCI smartphone-motion data the tree depth is chosen by cross-validation grouped by volunteer, and the nine test volunteers are used once per model: a 33-node decision tree scores 0.834 macro-F1 and a 2,186-node random forest 0.877. A tree-to-C exporter is checked by compiling the generated C and comparing it with scikit-learn. Not yet run on a microcontroller: the SparkFun Edge and Nano 33 BLE steps come next.
+- 🧪 [**tinyml-edge-lab**](https://github.com/baliyu/tinyml-edge-lab) — tested building blocks for machine learning on my own boards, with evaluation designed not to flatter the model.
+  - **Held-out results.** UCI activity data (cross-validation grouped by volunteer, the nine test volunteers used once per model): a 33-node decision tree scores 0.834 macro-F1 and a 2,186-node random forest 0.877. CWRU bearings: a forest scores 0.989 on a random split of windows, 0.943 holding out a motor load and 0.332 — chance — holding out a fault size, reported as it came out. My own SparkFun Edge recordings (5 desk gestures, 3 sessions, 465 windows): a forest scores 0.918 on a session it never saw, against 1.000 on a random split.
+  - **Towards the device.** Decision trees export to C with float thresholds that keep every split exact; a 33-node tree is 744 bytes of flash on a Cortex-M0+ (measured with the ARM compiler). The gesture features in C take 1.3 KB of flash and match the Python ones: no trained model changed an answer on any of the 465 windows. Own logger firmware and capture tool for the Edge.
+  - **Limits, stated in the repository:** one person and one board, so the numbers say little about others. **Not yet running a classifier on the board; that is next.**
 
 **Planned**
 - 🔌 **RTL design & verification** — UART, SPI, CDC async FIFO, cocotb
 - 🔐 **MCUboot on Zephyr**, compared with my own bootloader
-- 🧪 **TinyML on the SparkFun Edge and Nano 33 BLE** — the TinyML book's examples, then an IMU data logger and an on-device classifier checked against the PC
+- 🧪 **On-device gesture classifier on the SparkFun Edge** — run the model on the board and check its accuracy against the PC on a held-out session
+- 🧪 **TinyML on the Nano 33 BLE** — an IMU data logger for my own labelled data, then an on-device classifier checked against the PC
 
 ### Contact
 📫 baliyu70@gmail.com · [LinkedIn](https://www.linkedin.com/in/bello-aliyu-phd-827462111)
