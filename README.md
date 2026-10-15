@@ -10,7 +10,7 @@ I build and test low-power embedded systems — firmware, PCBs and the measureme
 - **Wireless & RF:** LoRa/LoRaWAN · BLE (GATT, secure pairing) · RTL-SDR capture · carrier-frequency-offset analysis
 - **Digital design:** VHDL · Verilog/SystemVerilog *(in progress)* · Intel Quartus · ModelSim
 - **Analysis:** Python (NumPy, pandas, scikit-learn, matplotlib)
-- **Edge ML:** evaluation without leakage (cross-validation grouped by volunteer; held-out recording sessions and fault sizes) · decision trees and random forests · decision-tree-to-C export with float thresholds, flash size measured on Cortex-M0+ and M4F · feature extraction in C checked against Python · the whole chain (resampling, features, random forest) running on the SparkFun Edge (Apollo3) · *a live accuracy test is next*
+- **Edge ML:** evaluation without leakage (cross-validation grouped by volunteer; held-out recording sessions and fault sizes) · decision trees and random forests · decision-tree-to-C export with float thresholds, flash size measured on Cortex-M0+ and M4F · feature extraction in C checked against Python · the whole chain (resampling, features, random forest) running on the SparkFun Edge (Apollo3) · live accuracy measured on a new session: 0.967 (one person, one board)
 
 ### Research highlights
 - 📄 [Complementary failure modes of SRAM-PUF and RF fingerprinting under compound thermal–distance stress](https://doi.org/10.1016/j.adhoc.2026.104413) — *Ad Hoc Networks* (Elsevier), 2026, open access
@@ -27,12 +27,12 @@ I build and test low-power embedded systems — firmware, PCBs and the measureme
 - 🧪 [**tinyml-edge-lab**](https://github.com/baliyu/tinyml-edge-lab) — tested building blocks for machine learning on my own boards, with evaluation designed not to flatter the model.
   - **Held-out results.** UCI activity data (cross-validation grouped by volunteer, the nine test volunteers used once per model): a 33-node decision tree scores 0.834 macro-F1 and a 2,186-node random forest 0.877. CWRU bearings: a forest scores 0.989 on a random split of windows, 0.943 holding out a motor load and 0.332 — chance — holding out a fault size, reported as it came out. My own SparkFun Edge recordings (5 desk gestures, 3 sessions, 465 windows): a forest scores 0.918 on a session it never saw, against 1.000 on a random split.
   - **On the device.** Decision trees export to C with float thresholds that keep every split exact; a 33-node tree is 744 bytes of flash on a Cortex-M0+ (measured with the ARM compiler). The gesture features in C take 1.5 KB of flash and match the Python ones: no trained model changed an answer on any of the 465 windows. The whole chain (resampling to 50 Hz, windows, features, a 100-tree forest) runs on the Edge at 3.8 ms per window, measured on the chip; the repository has the firmware, a serial monitor and a host-side simulation of the firmware's loop.
-  - **Limits, stated in the repository:** one person and one board, so the numbers say little about others. **Accuracy on a new session, with the gestures done in a known order, is not yet measured; that is next.**
+  - **Live accuracy on the board.** A new sitting, recorded after the model was trained: 15 shuffled blocks of one gesture each (7 minutes), with the board's own predictions scored against the gesture shown. 0.967 accuracy and 0.967 macro-F1 over 180 windows (95 % interval 0.922 to 1.000, resampling whole blocks; chance is 0.200). Weakest gesture: circle, recall 0.889 (4 of 36 windows read as tilt). The same model type scored 0.918 when a whole session was held out offline.
+  - **Limits, stated in the repository:** one person, one board and one live sitting, so the numbers say little about others, and the interval is wide because there are only three blocks per gesture. The board also reported one overwritten sensor sample, which I have not explained.
 
 **Planned**
 - 🔌 **RTL design & verification** — UART, SPI, CDC async FIFO, cocotb
 - 🔐 **MCUboot on Zephyr**, compared with my own bootloader
-- 🧪 **Live accuracy test on the SparkFun Edge** — a new session, the gestures done in a known order while the board predicts, reported with a confusion matrix
 - 🧪 **TinyML on the Nano 33 BLE** — an IMU data logger for my own labelled data, then an on-device classifier checked against the PC
 
 ### Contact
