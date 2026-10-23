@@ -4,7 +4,7 @@ I build and test low-power embedded systems — firmware, PCBs and the measureme
 
 ### What I work with
 - **Embedded:** C on ARM Cortex-M (STM32L0, SAMD21) · FreeRTOS (tasks, queues, mutexes, watchdog, tickless idle) · Zephyr RTOS (ztest, CMSIS-DSP, west) · SPI / I²C / UART · fixed-point control (PID with anti-windup and a sensor-fault supervisor), run on a real RC circuit · JTAG/SWD + GDB · CMake / arm-none-eabi-gcc
-- **Embedded security:** secure boot (SHA-256, ECDSA P-256, anti-rollback, power-fail-safe updates) · flash write protection and read-out protection · AES-128-CTR / AES-CMAC link security · hardware secure element (ATECC608) · authenticated BLE pairing (LE Secure Connections, bonds in flash) · key provisioning and backup · threat modelling (STRIDE) · reading a built binary in Ghidra
+- **Embedded security:** secure boot (SHA-256, ECDSA P-256, anti-rollback, power-fail-safe updates) · flash write protection and read-out protection · AES-128-CTR / AES-CMAC link security · hardware secure element (ATECC608) · authenticated BLE pairing (LE Secure Connections, bonds in flash) · MCUboot on Zephyr (signed images, boot-time slot check) · key provisioning and backup · threat modelling (STRIDE) · reading a built binary in Ghidra
 - **Testing:** host-side unit tests · known-answer vectors (FIPS-197, RFC 4493, RFC 6979) · simulated power-cut tests · Zephyr ztest on native_sim · cocotb (Python testbenches for Verilog and VHDL) · mutation checks (breaking a design on purpose to see whether the tests notice) · undefined-behaviour sanitiser · measurements on real hardware compared with a model's predictions · GitHub Actions CI (unit tests + firmware build + simulation)
 - **Hardware:** KiCad schematic & PCB layout · board bring-up · oscilloscope validation
 - **Wireless & RF:** LoRa/LoRaWAN · BLE (GATT, secure pairing) · RTL-SDR capture · carrier-frequency-offset analysis
@@ -36,9 +36,10 @@ These projects were built with AI assistance (Claude). I set the requirements, r
   - **Live accuracy on the board.** A new sitting, recorded after the model was trained: 15 shuffled blocks of one gesture each (7 minutes), with the board's own predictions scored against the gesture shown. 0.967 accuracy and 0.967 macro-F1 over 180 windows (95 % interval 0.922 to 1.000, resampling whole blocks; chance is 0.200). Weakest gesture: circle, recall 0.889 (4 of 36 windows read as tilt). The same model type scored 0.918 when a whole session was held out offline.
   - **Limits, stated in the repository:** one person, one board and one live sitting, so the numbers say little about others, and the interval is wide because there are only three blocks per gesture. The board also reported one overwritten sensor sample, which I have not explained.
 
+- 🛡️ [**mcuboot-lab**](https://github.com/baliyu/mcuboot-lab) — MCUboot as a second-stage bootloader on the Arduino Nano 33 BLE under Zephyr 4.4.2, kept behind the board's own Arduino bootloader so USB flashing and recovery still work. Signed with my own key, because MCUboot's default key is public. Boot-time tests on the board: a flipped bit in the app was accepted until I turned on the slot-0 check, and then the app did not start; an intact image signed with a different key did not start either. Compared with my own bootloader in the README. Not tested yet: updates from slot 1, power cuts, downgrade prevention.
+
 **Planned**
 - 🎛️ **The control loop on an STM32** (a board that is not locked down), with a hardware-in-the-loop test runner
-- 🔐 **MCUboot on Zephyr**, compared with my own bootloader
 - 🧪 **TinyML on the Nano 33 BLE** — an IMU data logger for my own labelled data, then an on-device classifier checked against the PC
 
 ### Contact
