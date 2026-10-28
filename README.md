@@ -39,7 +39,7 @@ These projects were built with AI assistance (Claude). I set the requirements, r
 - 🛡️ [**mcuboot-lab**](https://github.com/baliyu/mcuboot-lab) — MCUboot as a second-stage bootloader on the Arduino Nano 33 BLE under Zephyr 4.4.2, kept behind the board's own Arduino bootloader so USB flashing and recovery still work. Signed with my own key, because MCUboot's default key is public. Boot-time tests on the board: a flipped bit in the app was accepted until I turned on the slot-0 check, and then the app did not start; an intact image signed with a different key did not start either. Compared with my own bootloader in the README. Not tested yet: updates from slot 1, power cuts, downgrade prevention.
 
 **Planned**
-- - 🎛️ **A hardware-in-the-loop test runner for the control loop**, on the Feather M0 setup I already have
+-  🎛️ **A hardware-in-the-loop test runner for the control loop**, on the Feather M0 setup I already have
 - 🧪 **TinyML on the Nano 33 BLE** — an IMU data logger for my own labelled data, then an on-device classifier checked against the PC
 
 ### Contact
