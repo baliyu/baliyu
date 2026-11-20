@@ -11,7 +11,7 @@ I build and test low-power embedded systems: firmware, PCBs and the measurements
 - **Digital design:** VHDL · Verilog · UART, SPI master and a clock-domain-crossing asynchronous FIFO (Gray-coded pointers), simulated with Icarus Verilog and GHDL · Intel Quartus · ModelSim
 - **Analysis:** Python (NumPy, pandas, scikit-learn, matplotlib)
 - **Connectivity:** MQTT (Mosquitto broker; MQTT 5, last will, retained status, per-topic permissions) · a serial-to-MQTT bridge in Python with CI
-- **Edge ML:** evaluation without leakage (cross-validation grouped by volunteer; held-out recording sessions and fault sizes) · decision trees and random forests · decision-tree-to-C export with float thresholds, flash size measured on Cortex-M0+ and M4F · feature extraction in C checked against Python · the whole chain (resampling, features, random forest) running on the SparkFun Edge (Apollo3) · live accuracy measured on a new session: 0.967 (one person, one board)
+- **Edge ML:** evaluation without leakage (cross-validation grouped by volunteer; held-out recording sessions and fault sizes) · decision trees and random forests · decision-tree-to-C export with float thresholds, flash size measured on Cortex-M0+ and M4F · feature extraction in C checked against Python · the whole chain (resampling, features, random forest) running on the SparkFun Edge (Apollo3) · live accuracy measured on a new session: 0.967 (one person, one board) · int8 quantisation with LiteRT Micro on the Nano 33 BLE, board output checked against the PC
 
 ### Research highlights
 - 📄 [Complementary failure modes of SRAM-PUF and RF fingerprinting under compound thermal–distance stress](https://doi.org/10.1016/j.adhoc.2026.104413), *Ad Hoc Networks* (Elsevier), 2026, open access
@@ -32,6 +32,8 @@ These projects were built with AI assistance (Claude). I set the requirements, r
 - ⏱️ [**timing-lab**](https://github.com/baliyu/timing-lab): timing side-channel measurements on a Feather M0 (Cortex-M0+) and a Nano 33 BLE (Cortex-M4F), comparing a constant-time compare with an early-exit loop and the library memcmp, including unaligned buffers. Predictions were written before each run and the misses are kept in a scorecard. Limits are in the README. Built with AI assistance (Claude).
 - 📐 [**dsp-lab**](https://github.com/baliyu/dsp-lab): fixed-point biquad and FIR filters in C and C++, checked bit for bit against a Python model (227 tests), with cycle counts on both boards and predictions written first. Limits are in the README. Built with AI assistance (Claude).
 - 🏭 [**puf-shield-dfm**](https://github.com/baliyu/puf-shield-dfm): a self-directed manufacturing review of my own research PCB: a DFM review, a DFMEA of 16 failure modes and a costed bill of materials. A desk exercise: no manufacturer reviewed it, and the scores are my judgement, not field data. The BOM is partly done (3 of 7 fitted lines priced). Built with AI assistance (Claude).
+- 📉 [**litert_quant**](https://github.com/baliyu/tinyml-edge-lab/tree/main/litert_quant): float against int8 versions of three small models (digits, UCI activity data, CWRU bearing faults) run with LiteRT Micro on the Arduino Nano 33 BLE. int8 was 1.6 to 3.0 times faster by cycle count and 1.9 to 2.6 times smaller in model size, and the board matched the PC on every test input. My first int8 build gave wrong outputs (14 of 360 predictions differed) because of per-channel dense weights; I fixed it at export and added a regression test. 157 tests in GitHub Actions. Limits, stated in the repository: one seed, one board, test subsets on the board, an assumed 64 MHz clock, and a bearing task where a plain RMS baseline scores almost the same as the autoencoder. Built with AI assistance (Claude).
+- 🐧 [**yocto-qemu-lab**](https://github.com/baliyu/yocto-qemu-lab): a small Yocto Linux image built and booted in QEMU, with its SBOM and vulnerability report compared with my hand-made MCUboot SBOM. The report has 145 Unpatched matches that I have not triaged, so they are leads, not findings. One image, one machine, no real hardware. Built with AI assistance (Claude).
 - 🧷 [**Merged fix in the Zephyr RTOS**](https://github.com/zephyrproject-rtos/zephyr/pull/122909): two wrong register constants in the MII driver headers. I asked the maintainer first, wrote a test that failed before the fix and passed after it, and followed the project's rules on sign-off and AI disclosure. A two-line fix, approved by three maintainers.
 
 **In progress**
@@ -46,7 +48,6 @@ These projects were built with AI assistance (Claude). I set the requirements, r
 
 **Planned**
 - 🎛️ **A hardware-in-the-loop test runner for the control loop**, on the Feather M0 setup I already have
-- 🧪 **TinyML on the Nano 33 BLE**: an IMU data logger for my own labelled data, then an on-device classifier checked against the PC
 
 ### Contact
 📫 baliyu70@gmail.com · [LinkedIn](https://www.linkedin.com/in/bello-aliyu-phd-827462111)
